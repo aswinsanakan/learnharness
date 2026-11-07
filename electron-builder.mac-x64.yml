@@ -1,0 +1,18 @@
+# Intel (x64) macOS overlay — unsigned, unnotarized, local builds.
+# Run: npm run desktop:dist:mac-x64
+# Everything else (files, extraResources, icon, dmg layout) is inherited.
+extends: ./electron-builder.yml
+mac:
+  # Static full-res icon: the layered build/icon.icon needs actool >= 26 (Xcode 26+).
+  icon: build/icon.icns
+  # A single object (not an array) so the inherited arm64 targets are
+  # replaced rather than concatenated; verified by the build output.
+  target:
+    target: default
+    arch: x64
+  artifactName: "${productName}-${version}-x64-mac.${ext}"
+  # No Apple Developer ID / notarization credentials needed.
+  identity: null
+  notarize: false
+dmg:
+  artifactName: "${productName}-${version}-x64.${ext}"
